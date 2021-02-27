@@ -6,6 +6,11 @@ class ContactsController < ApplicationController
     @contacts = Contact.all.reorder('id DESC')
 
     render json: @contacts 
+  end 
+
+  def countContact
+    @counteur = Contact.count
+    render json: @counteur
   end
 
   # GET /contacts/1
@@ -46,6 +51,6 @@ class ContactsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def contact_params
-      params.permit(:name, :email, :telephone, :message)
+      params.permit(:name, :email, :telephone, :message, :subject, :onligne)
     end
 end

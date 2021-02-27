@@ -1245,8 +1245,9 @@ table.no-margin .progress {
   padding-left: 10px; }
 
 .row {
-  margin-right: -10px;
-  margin-left: -10px; }
+  position: relative;
+  margin-right: 10px;
+  margin-left: 10px; }
 
 .grid_slider .col-md-6 {
   padding: 0 40px; }
@@ -2246,7 +2247,7 @@ span.right {
   padding: 5px 0 0 0;
   position: fixed;
   width: 230px;
-  background: #2A3F54; }
+  background: #f4f4f4; }
 
 .sidebar-footer a {
   padding: 7px 0 3px;
@@ -2255,10 +2256,10 @@ span.right {
   font-size: 17px;
   display: block;
   float: left;
-  background: #172D44; }
+  background: #c3d5e9; }
 
 .sidebar-footer a:hover {
-  background: #425567; }
+  background: #f4f4f4; }
 
 /** top tiles  */
 .tile_count {
@@ -3999,7 +4000,7 @@ ul.project_files li a i {
 /* *********  /ecommerce  **************************** */
 /** login **/
 .login {
-  background: #F7F7F7; }
+  background-image: url("images/p1.jpg") ; }
 
 .login .fa-paw {
   font-size: 26px; }

@@ -3,15 +3,34 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
+    @users = User.all.reorder('id DESC')
 
     render json: @users
   end
 
+  def search
+    @users = User.all.reorder('id DESC').where(["username LIKE ?", "%#{params[:username]}%"])
+      if @users && @users.exists?
+        render json: @users
+      # elsif @user = User.all.reorder('id DESC').where(["email LIKE ?", "%#{params[:email]}%"])
+      #   render json: @user
+      else
+        render json: {message: "Aucune resultat"}, status: 202
+      end
+  end
+
+  def counteur
+    @client = User.count
+
+    render json: @client
+  end
+
   # GET /users/1
   def show
+    @userLocation = @user.locations
+    counter = @userLocation.count
     token = encode_token({user_id: @user.id})
-    render json: {client: @user, token: token}
+    render json: {client: @user, token: token, location: @userLocation, allReservation: counter}
   end
 
   # POST /users
@@ -24,6 +43,26 @@ class UsersController < ApplicationController
     else
       render json: @user.errors, status: :unprocessable_entity
     end
+  end
+
+  def user_session
+    @user = User.find_by_email(params[:email])
+
+
+    if @user && @user.authenticate(params[:password])
+      
+      token = encode_token({user_id: @user.id})
+      render json: {user: @user, token: token}
+      session[:current_user_id] = @user.id
+    elsif user = User.find_by_password_digest(params[:password])
+      if user
+        token = encode_token({user_id: user.id})
+        render json: {user: user, token: token}
+      end
+    else
+      render json: {message: "Email ou mot de passe incorrect"}, status: 202
+    end
+    
   end
 
   # PATCH/PUT /users/1
@@ -48,6 +87,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.permit(:nom, :prenom, :email, :telephone, :password, :photoUser, :authentication_token)
+      params.permit(:username, :onligne, :email, :telephone, :password, :photoUser, :authentication_token)
     end
 end

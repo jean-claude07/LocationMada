@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 
 export class Navbar extends Component {
     render() {
+        const admin = this.props.data.admin
+        let image;
+        if(admin.adminphoto.url === null){
+            image = <img src="images/user.png" alt="..." />
+        }else{
+            image = <img src={`http://localhost:4000/${admin.adminphoto.url}`} alt="..." />
+        }
         return (
             <div>
                 <div class="top_nav">
@@ -12,18 +19,14 @@ export class Navbar extends Component {
                         <nav class="nav navbar-nav">
                         <ul class=" navbar-right">
                             <li class="nav-item dropdown open" style={{padding: '5px'}}>
-                            <a href="" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                <img src="images/img.jpg" alt=""/>John Doe
-                            </a>
-                            <div class="dropdown-menu dropdown-usermenu pull-right" id="admin" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item"  href="javascript:;"> Profile</a>
-                                <a class="dropdown-item"  href="javascript:;">
-                                    <span class="badge bg-red pull-right">50%</span>
-                                    <span>Settings</span>
-                                </a>
-                            <a class="dropdown-item"  href="javascript:;">Help</a>
-                                <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
-                            </div>
+                                <selecte class="user-profile " aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                    {image} {admin && admin.adminName}
+                                    <option className="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                                        <a className="dropdown-item"  href="#">Help</a>
+                                        <a className="dropdown-item"  href="/profile-admin">Profile</a>
+                                        <a className="dropdown-item"  href="#" ><i className="fa fa-sign-out pull-right"></i> Deconnexion</a>
+                                    </option>
+                                </selecte>
                             </li>
 
                             <li role="presentation" class="nav-item dropdown open">
